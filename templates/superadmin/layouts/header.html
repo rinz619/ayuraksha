@@ -16,7 +16,7 @@
     <title>Ayuraksha | Dashboard</title>
 
     <!-- BOOTSTRAP CSS -->
-    <link id="style" href="{% static 'superadmin/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="style" href="{% static 'superadmin/assets/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet" />
 
     <!-- STYLE CSS -->
     <link href="{% static 'superadmin/assets/css/style.css' %}" rel="stylesheet" />
@@ -124,7 +124,7 @@
                            
                            
                             <li class="slide">
-                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="users-view.php">
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{% url 'superadmin:userslist' %}">
 								<i class="side-menu__icon fe fe-users"></i>
 								<span class="side-menu__label">Users  </span>
 								</a>
@@ -132,13 +132,13 @@
                            
 
                             <li class="slide">
-                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="course-view.php">
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{% url 'superadmin:courselist' %}">
 								<i class="side-menu__icon fe fe-clipboard"></i>
 								<span class="side-menu__label">Courses </span>
 								</a>
                             </li>
                             <li class="slide">
-                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="reguser-view.php">
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{% url 'superadmin:registeredlist' %}">
 								<i class="side-menu__icon fe fe-users"></i>
 								<span class="side-menu__label">Registered Users </span>
 								</a>

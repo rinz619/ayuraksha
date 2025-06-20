@@ -136,3 +136,51 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
 
+
+
+
+
+class Courses(models.Model):
+    title = models.TextField(null=True, blank=True)
+    trainer = models.TextField(null=True, blank=True)
+    designation = models.TextField(null=True, blank=True)
+    shortdesignation = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    validity = models.DateField(null=True, blank=True)
+    startdate = models.DateField(null=True, blank=True)
+    enddate = models.DateField(null=True, blank=True)
+    demourl = models.TextField(null=True, blank=True)
+    priceaed_android = models.TextField(null=True, blank=True)
+    pricedollar_android = models.TextField(null=True, blank=True)
+    priceaed_ios = models.TextField(null=True, blank=True)
+    pricedollar_ios = models.TextField(null=True, blank=True)
+    highlight1 = models.TextField(null=True, blank=True)
+    highlight2 = models.TextField(null=True, blank=True)
+    highlight3 = models.TextField(null=True, blank=True)
+    value1 = models.TextField(null=True, blank=True)
+    value2 = models.TextField(null=True, blank=True)
+    value3 = models.TextField(null=True, blank=True)
+
+    offering_Identifier = models.TextField(null=True, blank=True)
+    package_Identifier = models.TextField(null=True, blank=True)
+    entitlement_Identifier = models.TextField(null=True, blank=True)
+    
+    image = models.ImageField(upload_to='course', null=True, blank=True)
+    chatroom = models.ImageField(upload_to='course', null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+
+
+class RegisteredUsers(models.Model):
+    course = models.ForeignKey(Courses,on_delete=models.SET_NULL,null=True, blank=True)
+    name = models.TextField(null=True, blank=True)
+    email = models.TextField(null=True, blank=True)
+    phone = models.TextField(null=True, blank=True)
+    proffesion = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='regsiter',null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

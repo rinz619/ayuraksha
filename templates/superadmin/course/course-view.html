@@ -1,0 +1,185 @@
+{% include 'superadmin/layouts/header.html' %}
+
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Courses</h1>
+                <div>
+                    <a class="btn btn-primary" href="{% url 'superadmin:coursecreate' %}"><i
+                            class="side-menu__icon fe fe-plus mx-1"></i>Add New</a>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <!-- ROW OPEN -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">List of All Courses</h3>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+
+                                <table
+                                    class="table border-top table-bordered mb-0 table-hover  dataTables_wrapper dt-bootstrap5"
+                                    id="datatable-basic">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl No</th>
+                                            
+                                            <th>Thumbnail</th>
+                                            <th>Course Title</th>
+                                            <th>Lessons</th>
+                                            <th>Other Details </th>
+
+
+                                            <th>Status</th>
+
+
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+
+                                            
+                                           
+                                            
+                                            <td><img  class="avatar avatar-md br-7" src="assets/images_ex/user.png"></td>
+                                                        
+                                            <td> </td>
+                                            <td><a href="lesson-view.php" class="btn btn-primary btn-sm">
+                                            <i class="side-menu__icon fe fe-eye mx-1"></i>View</a>  </td>
+                                            
+                                            <td><a href="#" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#smalldes">
+                                            <i class="side-menu__icon fe fe-eye mx-1"></i>View</a> </td>
+
+
+
+                                            <td>
+                                                <div class="material-switch">
+                                                    <input id="someSwitchOptionSuccess" name="someSwitchOption001"
+                                                        type="checkbox" checked />
+                                                    <label for="someSwitchOptionSuccess" class="label-success"></label>
+                                                </div>
+
+                                            </td>
+                                            <td>
+
+
+                                                <a class="btn btn-info btn-sm mb-1" href=""><i
+                                                        class="side-menu__icon fe fe-edit"></i></a>
+
+                                                <a class="btn btn-danger btn-sm mb-1" href="#"><i
+                                                        class="side-menu__icon fe fe-trash" data-bs-toggle="modal"
+                                                        data-bs-target="#modaldemo5"></i></a>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- CONTAINER END -->
+    </div>
+</div>
+
+
+
+<div class="modal  fade" id="smalldes" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Other Details</h5>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table border-top table-bordered mb-0" id="datatable-basic">
+                    <thead>
+                        <tr>
+                           
+                            <th>Short Description</th>
+                            <th>Trainer Name</th>
+                            <th>Designation</th>
+                            <th>Course Duration</th>
+                            <th>Course Start Date</th>
+                              <th>Course End Date</th>
+                            
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                       
+                            <td></td>
+                            <td></td>
+							<td></td>
+                            <td></td>
+							
+                            <td></td>
+                              <td></td>
+							
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<!-- CONTAINER END -->
+</div>
+</div>
+<!--app-content close-->
+
+
+
+
+
+<div class="modal  fade" id="modaldemo5" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md modal-dialog-centered text-center" role="document">
+        <div class="modal-content ">
+
+            <div class="modal-body">
+                <button aria-label="Close" class="btn-close position-absolute" data-bs-dismiss="modal"><span
+                        aria-hidden="true">&times;</span></button>
+                <i class="icon icon-close fs-70 text-danger lh-1 my-5 d-inline-block"></i>
+                <h4 class="text-danger">Are You Sure Do You Want To Delete ?</h4>
+                <p class="mg-b-20 mg-x-20">Item Will be Deleted Permanently</p>
+                <button class="btn btn-success">Yes</button>
+                <button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            <div class="modal-footer">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'superadmin/layouts/footer.html' %}
