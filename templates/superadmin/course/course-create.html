@@ -24,13 +24,13 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form method="post" enctype= multipart/form-data>
+                            <form method="post" enctype="multipart/form-data" id="myForm">
                                 {% csrf_token %}
                                 <div class="row">
 
                                     <div class="col-lg-12 col-sm-12 mb-4 mb-lg-0">
                                         <label for="#" class="form-label">Upload Course Thumbnail</label>
-                                        <input type="file" class="dropify" data-bs-height="180" />
+                                        <input type="file" class="dropify" data-bs-height="180" {% if not data %}required{% endif %} name="imagefile" data-default-file="{{data.image.url}}" />
                                     </div>
 
 
@@ -54,45 +54,51 @@
 
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Course Title</label>
-                                    <input type="text" class="form-control" id="#" placeholder="Course Title">
+                                    <input type="text" class="form-control" placeholder="Course Title" required name="title" value="{{data.title}}">
                                 </div>
-                                <div class="form-group col-lg-6 col-12">
-                                    <label for="#" class="form-label">Trainer Name</label>
-                                    <input type="text" class="form-control" id="#" placeholder="Trainer Name">
-                                </div>
-                                <div class="form-group col-lg-6 col-12">
-                                    <label for="#" class="form-label">Designation</label>
-                                    <input type="text" class="form-control" id="#" placeholder="Designation">
-                                </div>
+                               
                                 
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Course Validity</label>
-                                    <input type="date" class="form-control" id="#" placeholder="Course Validity">
+                                    <input type="date" class="form-control" id="#" placeholder="Course Validity" required name="validity" value="{{data.validity|date:'Y-m-d'}}">
                                 </div>
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Course Start Date</label>
-                                    <input type="date" class="form-control" id="#" placeholder="Course Start Date">
+                                    <input type="date" class="form-control" id="#" placeholder="Course Start Date" required name="start_date" value="{{data.startdate|date:'Y-m-d'}}">
                                 </div>
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Course End Date</label>
-                                    <input type="date" class="form-control" id="#" placeholder="Course End Date">
+                                    <input type="date" class="form-control" id="#" placeholder="Course End Date" required name="end_date" value="{{data.enddate|date:'Y-m-d'}}">
                                 </div>
+                                 <div class="form-group col-lg-6 col-12">
+                                    <label for="#" class="form-label">Course Price</label>
+                                    <input type="text" class="form-control" id="#" placeholder="Course Price" required name="price" value="{{data.price}}">
+                                </div>
+                                <div class="form-group col-lg-6 col-12">
+                                                    <label for="exampleInputEmail1" class="form-label">Select Instructors</label>
+                                                    <select class="form-control select2" data-placeholder="Select Trainer" required name="trainer" >
+                                                        <option value="">Select</option>
+                                                        {% for i in trainer %}
+                                                    <option value="{{i.id}}" {% if i.id == data.trainer.id %}selected{% endif %} >{{i.name}}</option>
+                                                    {% endfor %}
+                                                   </select>
+                                                </div>
 
 
                                 <div class="form-group col-lg-12 col-12">
                                     <label for="#" class="form-label">Short Description</label>
-                                   <textarea class="form-control " ></textarea>
+                                   <textarea class="form-control " name="description" required >{{data.description}}</textarea>
                                 </div>
 
                                 <div class="form-group col-lg-3 col-3">
-                                    <a class="btn btn-primary mt-4 mb-0" href="">Submit</a>
+                                    <button type="submit" class="btn btn-primary mt-4 mb-0" id="submitButton" >Submit</button>
                                 </div>
-
-                                </form>
                             </div>
                         </div>
 
                     </div>
+                    
+                    
                     <!-- ROW CLOSED -->
 
 
@@ -103,5 +109,6 @@
         </div>
         </div>
         <!--app-content close-->
+
 
 {% include 'superadmin/layouts/footer.html' %}
