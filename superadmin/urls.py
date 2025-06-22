@@ -22,6 +22,7 @@ urlpatterns = [
     
     path('lessionlist/<int:id>', views.lessionlist.as_view(), name='lessionlist'),
     path('lessioncreate/<int:lessonid>', views.lessioncreate.as_view(), name='lessioncreate'),
+    path('lessonedit/<int:lessonid>/<int:id>', views.lessioncreate.as_view(), name='lessonedit'),
     
     path('registeredlist', views.registeredlist.as_view(), name='registeredlist'),
     path('userslist', views.userslist.as_view(), name='userslist'),

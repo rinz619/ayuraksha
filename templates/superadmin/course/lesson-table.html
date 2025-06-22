@@ -1,0 +1,203 @@
+ <input type="hidden" id="url" name="url" value="{{request.path}}">
+<input type="hidden" id="page" name="page" value="{{page}}">
+
+{% if messages %}
+<div id="message_div" class="succs-msg cutomAlert">
+    {% for message in messages %}
+      
+            <p>{{message}}</p>
+        
+    {% endfor %}
+</div>
+{% endif %}
+
+{% load custom_tags %}
+ <table
+                                    class="table border-top table-bordered mb-0 table-hover  dataTables_wrapper dt-bootstrap5"
+                                    id="datatable-basic">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl No</th>
+                                            
+                                            <th>Lesson Title</th>
+                                           
+                                            <th>Video Urls</th>
+                                            
+
+                                            <th>Status</th>
+
+
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if datas %}
+                                            {% for i in datas %}
+                                            <tr>
+                                                <td>{{forloop.counter0|add:datas.start_index}}</td>
+                                           
+                                            <td>{{i.title}}</td>
+                                            
+                                            
+
+                                            <td><a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#smallmodal{{i.id}}">
+                                                    <i class="side-menu__icon fe fe-eye mx-1"></i>View</a>
+                                                
+                                                 <div class="modal  fade" id="smallmodal{{i.id}}" tabindex="-1" role="dialog">
+       <div class="modal-dialog modal-xl" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title">Videos</h5>
+                   <button class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">×</span>
+                       </button>
+               </div>
+               <div class="modal-body">
+                  
+               <table class="table border-top table-bordered mb-0" id="datatable-basic">
+                                <thead>
+                                    <tr>
+                                            <th>Video Title</th>
+                                             <th>Video Url</th>
+                                            
+                                           
+                                          
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% getcontents i.id as contents %}
+                                    {% for content in contents %}
+                                    <tr>
+                                        
+                                        <td>{{content.title}}</td>
+                                        <td>{{content.url}}</td>
+                                       
+                                      
+
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+
+
+                    
+               </div>
+               <div class="modal-footer">
+                   <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                  
+               </div>
+           </div>
+       </div>
+
+
+                   </div>
+                   <!-- CONTAINER END -->
+               </div>
+           </div>
+           <!--app-content close-->
+
+
+                                                
+                                                </td>
+                                            </td>
+
+
+
+                                            <td>
+                    <div class="material-switch">
+                             <input id="someSwitchOptionSuccess{{i.id}}" name="someSwitchOption001" type="checkbox" {% if i.is_active %}checked onclick="categorystatus({{i.id}},2)"{% else %}onclick="categorystatus({{i.id}},1)" {% endif %}  />
+                             <label for="someSwitchOptionSuccess{{i.id}}" class="label-success"></label>
+                         </div>
+               </td>
+            <td>
+    
+    
+                <a class="btn btn-info btn-sm mb-1" href="{% url 'superadmin:lessonedit' lessonid i.id %}"><i class="side-menu__icon fe fe-edit"></i></a>
+    
+    
+                        <a class="btn btn-danger btn-sm mb-1" href="javascript:void(0)" onclick="delete_modal({{i.id}})"><i class="side-menu__icon fe fe-trash" ></i></a>
+    
+    
+            </td>
+        </tr>
+                                   {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="9" align="center">
+            No Data
+        </td>
+    </tr>
+    {% endif %}
+
+</tbody>
+</table>
+
+
+
+<div class="pagination_section">
+    {% if datas %}
+    Showing {{ datas.start_index }}-{{ datas.end_index }} of {{ datas.paginator.count }}
+    {% endif %}
+    <!--Pagination-->
+    {% if datas.has_other_pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if datas.has_previous %}
+            <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" onclick="return filtercourse('{{ datas.previous_page_number }}');">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+            </li>
+        {% endif %}
+        {% if datas.number == 1 %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">First</a>
+            </li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return filtercourse('{{ 1 }}');">First</a></li>
+        {% endif %}
+        {% for i in datas.paginator.page_range %}
+            {% if datas.number > i and i > datas.number|add:-5 %}
+            <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return filtercourse('{{ i }}');">{{ i }}</a></li>
+            {% endif %}
+            {% if datas.number == i %}
+            <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                {{ i }}
+                <span class="sr-only">(current)</span>
+            </span>
+            </li>
+            {% endif  %}
+            {% if datas.number < i and i < datas.number|add:5 %}
+            <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return filtercourse('{{ i }}');">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if datas.number == datas.paginator.num_pages %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Last</a>
+            </li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="return filtercourse('{{ datas.paginator.num_pages }}');">Last</a></li>
+        {% endif %}
+        {% if datas.has_next %}
+            <li class="page-item">
+            <a class="page-link"  href="javascript:void(0)" onclick="return filtercourse('{{ datas.next_page_number }}');">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+            </li>
+        {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+<script>
+ $("#message_div").fadeOut(3000);
+</script>

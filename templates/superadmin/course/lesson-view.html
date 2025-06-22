@@ -30,62 +30,7 @@
 
                             <div class="table-responsive">
 
-                                <table
-                                    class="table border-top table-bordered mb-0 table-hover  dataTables_wrapper dt-bootstrap5"
-                                    id="datatable-basic">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl No</th>
-                                            
-                                            <th>Lesson Title</th>
-                                           
-                                            <th>Video Urls</th>
-                                            
-
-                                            <th>Status</th>
-
-
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                           
-                                            <td></td>
-                                            
-                                            
-
-                                            <td><a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#smallmodal">
-                                                    <i class="side-menu__icon fe fe-eye mx-1"></i>View</a></td>
-                                            </td>
-
-
-
-                                            <td>
-                                                <div class="material-switch">
-                                                    <input id="someSwitchOptionSuccess" name="someSwitchOption001"
-                                                        type="checkbox" checked />
-                                                    <label for="someSwitchOptionSuccess" class="label-success"></label>
-                                                </div>
-
-                                            </td>
-                                            <td>
-
-
-                                                <a class="btn btn-info btn-sm mb-1" href=""><i
-                                                        class="side-menu__icon fe fe-edit"></i></a>
-
-                                                <a class="btn btn-danger btn-sm mb-1" href="#"><i
-                                                        class="side-menu__icon fe fe-trash" data-bs-toggle="modal"
-                                                        data-bs-target="#modaldemo5"></i></a>
-
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                               {% include 'superadmin/course/lesson-table.html' %}
                             </div>
                         </div>
                     </div>
@@ -151,24 +96,5 @@
            </div>
            <!--app-content close-->
 
-    <div class="modal  fade" id="modaldemo5" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-md modal-dialog-centered text-center" role="document">
-            <div class="modal-content ">
-
-                <div class="modal-body">
-                    <button aria-label="Close" class="btn-close position-absolute" data-bs-dismiss="modal"><span
-                            aria-hidden="true">&times;</span></button>
-                    <i class="icon icon-close fs-70 text-danger lh-1 my-5 d-inline-block"></i>
-                    <h4 class="text-danger">Are You Sure Do You Want To Delete ?</h4>
-                    <p class="mg-b-20 mg-x-20">Item Will be Deleted Permanently</p>
-                    <button class="btn btn-success">Yes</button>
-                    <button aria-label="Close" class="btn btn-danger pd-x-25" data-bs-dismiss="modal">Cancel</button>
-                </div>
-                <div class="modal-footer">
-
-
-                </div>
-            </div>
-        </div>
-    </div>
+   
 {% include 'superadmin/layouts/footer.html' %}

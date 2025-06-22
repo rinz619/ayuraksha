@@ -157,11 +157,28 @@ class Courses(models.Model):
     description = models.TextField(null=True, blank=True)
     validity = models.DateField(null=True, blank=True)
     startdate = models.DateField(null=True, blank=True)
-    enddate = models.DateField(null=True, blank=True)
-    
-
+    enddate = models.DateField(null=True, blank=True)   
     
     image = models.ImageField(upload_to='course', null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Lessions(models.Model):
+    course = models.ForeignKey(Courses,on_delete=models.CASCADE,null=True, blank=True)
+    title = models.TextField(null=True, blank=True)
+    
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class LessionContents(models.Model):
+    lesson = models.ForeignKey(Lessions,on_delete=models.CASCADE,null=True, blank=True)
+    title = models.TextField(null=True, blank=True)
+    url = models.TextField(null=True, blank=True)
+    
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

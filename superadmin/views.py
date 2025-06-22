@@ -326,7 +326,7 @@ class lessionlist(LoginRequiredMixin,View):
             if type == '1':
                 id = request.GET.get('id')
                 vl = request.GET.get('vl')
-                cat = Courses.objects.get(id=id)
+                cat = Lessions.objects.get(id=id)
                 if vl == '2':
                     cat.is_active = False
                 else:
@@ -335,13 +335,13 @@ class lessionlist(LoginRequiredMixin,View):
                 messages.info(request, 'Successfully Updated')
             elif type == '2':
                 id = request.GET.get('id')
-                Courses.objects.filter(id=id).delete()
+                Lessions.objects.filter(id=id).delete()
                 messages.info(request, 'Successfully Deleted')
             # if search:
             #     conditions &= Q(eng_title__icontains=search)
             if status:
                 conditions &= Q(is_active=status)
-            data_list = Courses.objects.filter(conditions).order_by('-id')
+            data_list = Lessions.objects.filter(conditions).order_by('-id')
             paginator = Paginator(data_list, 15)
 
             try:
@@ -351,11 +351,11 @@ class lessionlist(LoginRequiredMixin,View):
             except EmptyPage:
                 datas = paginator.page(paginator.num_pages)
             context['datas'] = datas
-            template = loader.get_template('superadmin/course/course-table.html')
+            template = loader.get_template('superadmin/course/lesson-table.html')
             html_content = template.render(context, request)
             return JsonResponse({'status': True, 'template': html_content})
 
-        data = Courses.objects.all().order_by('-id')
+        data = Lessions.objects.all().order_by('-id')
         p = Paginator(data, 15)
         page_num = request.GET.get('page', 1)
         try:
@@ -370,45 +370,40 @@ class lessionlist(LoginRequiredMixin,View):
 
 class lessioncreate(LoginRequiredMixin, View):
     def get(self, request,lessonid=None, id=None):
-        print('lessonid===',lessonid)
         context = {}
         try:
-            context['data'] = Courses.objects.get(id=id)
+            context['data'] = Lessions.objects.get(id=id)
+            context['content'] = dt = LessionContents.objects.filter(lesson=id)
+            print(dt)
         except:
             context['data'] = None
+            context['content'] = None
         context['lessonid'] =lessonid
         return renderhelper(request, 'course', 'lesson-create', context)
 
-    def post(self, request, id=None):
+    def post(self, request,lessonid=None, id=None):
         try:
-            data = Courses.objects.get(id=id)
+            data = Lessions.objects.get(id=id)
             messages.info(request, 'Successfully Updated')
         except:
-            data = Courses()
+            data = Lessions()
             messages.info(request, 'Successfully Added')
 
-        course_thumbnail = request.FILES.get('imagefile')
-        if course_thumbnail:
-            data.image=course_thumbnail
 
-
-
-
-       
-
+        data.course_id=lessonid
         data.title=request.POST['title']
-        data.validity=request.POST['validity']
-        data.startdate=request.POST['start_date']
-        data.enddate=request.POST['end_date']
-        data.price=request.POST['price']
-        data.trainer_id=request.POST['trainer']
-        data.description=request.POST['description']
-       
-
         data.save()
+        LessionContents.objects.filter(lesson=data.id).delete()
+        ctitle = request.POST.getlist('video_title')
+        curl = request.POST.getlist('video_url')
+        for i in range(len(ctitle)):
+            sub = LessionContents()
+            sub.lesson = data
+            sub.title = ctitle[i]
+            sub.url = curl[i]
+            sub.save()
 
-
-        return redirect('superadmin:courselist')
+        return redirect('superadmin:lessionlist',id=lessonid)
 
 
 

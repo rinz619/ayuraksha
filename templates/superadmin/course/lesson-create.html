@@ -11,7 +11,7 @@
             <div class="page-header">
                 <h1 class="page-title">Create Lessons</h1>
                 <div>
-                    <a class="btn btn-primary" href="lesson-view.php"><i class="side-menu__icon fe fe-eye mx-1"></i>View
+                    <a class="btn btn-primary" href="{% url 'superadmin:lessionlist' lessonid %}"><i class="side-menu__icon fe fe-eye mx-1"></i>View
                         All</a>
                 </div>
             </div>
@@ -24,50 +24,83 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form>
+                            <form method="post" enctype="multipart/form-data" id="myForm">
+                                {% csrf_token %}
                                 <div class="row">
 
 
                                     <div class="form-group col-lg-12 col-12">
                                         <label for="#" class="form-label">Lesson Title</label>
-                                        <input type="text" class="form-control" id="#" placeholder="Lesson Title">
+                                        <input type="text" class="form-control" id="#" placeholder="Lesson Title" required name="title" value="{{ data.title }}">
                                     </div>
-                                     <div class="form-group col-lg-12 col-12">
+                                     {% comment %} <div class="form-group col-lg-12 col-12">
                                         <label for="#" class="form-label">Course Name</label>
                                         <input type="text" class="form-control" id="#" placeholder="Course Name" readonly>
-                                    </div>
+                                    </div> {% endcomment %}
                                    
 
                                     <div class="multi-field-wrapper ">
-                                        <div class="multi-fields">
-                                            <div class="multi-field">
-                                                <div class="row">
+                                       
+                                                
+
+                                                    {% if content %}
                                                     
+                                                    {% for i in content %}
+                                                     <div class="multi-fields">
+                                            <div class="multi-field">
+                                                    <div class="row">
                                                     <div class="form-group col-lg-6 col-12">
                                                         <label for="#" class="form-label">Video Title</label>
                                                         <input type="text" class="form-control" id="#"
-                                                            placeholder="Video Title">
+                                                            placeholder="Video Title" required name="video_title" value="{{i.title}}" >
                                                     </div>
                                                     
                                                     <div class="form-group col-lg-6 col-12">
                                                         <label for="#" class="form-label">Video Url</label>
                                                         <input type="text" class="form-control" id="#"
-                                                            placeholder="Video Url">
+                                                            placeholder="Video Url" required name="video_url" value="{{i.url}}" >
                                                     </div>
-
-
-
-                                                </div>
+                                                     </div>
                                                 <button type="button"
                                                     class="remove-field float-right btn btn-danger btn-sm icon-btn"><i
                                                         class="mdi mdi-delete"></i>
                                                 </button>
-
-                                            </div>
+                                                 </div>
+                                                     </div>
+                                                    {% endfor %}
+                                                    {% else %}
+                                                     <div class="multi-fields">
+                                            <div class="multi-field">
+                                                    <div class="row">
+                                                    <div class="form-group col-lg-6 col-12">    
+                                                        <label for="#" class="form-label">Video Title</label>
+                                                        <input type="text" class="form-control" id="#"
+                                                            placeholder="Video Title" required name="video_title"  >
+                                                    </div>
+                                                    
+                                                    <div class="form-group col-lg-6 col-12">
+                                                        <label for="#" class="form-label">Video Url</label>
+                                                        <input type="text" class="form-control" id="#"
+                                                            placeholder="Video Url" required name="video_url" >
+                                                    </div>
+                                                     </div>
+                                                <button type="button"
+                                                    class="remove-field float-right btn btn-danger btn-sm icon-btn"><i
+                                                        class="mdi mdi-delete"></i>
+                                                </button>
+                                                 </div>
 
 
 
                                         </div>
+                                                    {% endif %}
+
+
+
+                                               
+
+                                           
+
                                         <div>
                                             <button type="button" type="button"
                                                 class="float-right add-field btn btn-info btn-sm icon-btn"
@@ -75,11 +108,12 @@
                                                 Add New<i class="mdi mdi-plus"></i>
                                             </button>
                                         </div>
+
                                     </div>
 
 
                                     <div class="form-group col-lg-3 col-3">
-                                        <a class="btn btn-primary mt-4 mb-0" href="">Submit</a>
+                                        <button class="btn btn-primary mt-4 mb-0" type="submit" id="submitButton">Submit</button>
                                     </div>
                                 </div>
                             </form>
