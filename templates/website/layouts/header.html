@@ -76,13 +76,13 @@
                                 <ul class="quick-access">
                                     
                                     <li class="access-icon rbt-user-wrapper">
-                                        <a class="rbt-btn btn-white btn-sm hover-icon-reverse" href="login.php">
+                                        <a class="rbt-btn btn-white btn-sm hover-icon-reverse" href="{% url 'website:loginuser' %}">
                                             Login
                                         </a>
                                         
                                     </li>
                                     <li class="access-icon rbt-user-wrapper">
-                                        <a class="rbt-round-btn" href="dashboard.php">
+                                        <a class="rbt-round-btn" href="{% url 'website:dashboard' %}">
                                             <i class="feather-user"></i>
                                         </a>
                                         
@@ -143,7 +143,7 @@
                                         
                                     </li>
                                 <li class="access-icon rbt-user-wrapper right-align-dropdown">
-                                    <a class="rbt-round-btn" href="dashboard.php">
+                                    <a class="rbt-round-btn" href="{% url 'website:dashboard' %}">
                                         <i class="feather-user"></i>
                                     </a>
                                     

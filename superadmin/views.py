@@ -91,6 +91,28 @@ class registeredlist(LoginRequiredMixin,View):
                 id = request.GET.get('id')
                 RegisteredUsers.objects.filter(id=id).delete()
                 messages.info(request, 'Successfully Deleted')
+                
+            elif type == '6':
+                id = request.GET.get('id')
+                rdata = RegisteredUsers.objects.get(id=id)
+                rdata.status = 1
+                rdata.save()
+                
+                udata = User()
+                udata.name = rdata.name
+                udata.phone = rdata.phone
+                udata.email = rdata.email
+                udata.image = rdata.image
+                udata.profession = rdata.proffesion
+                udata.user_type = 4
+                udata.set_password(str(1234))
+                udata.save()
+                
+                cdata = UserCourses()
+                cdata.user = udata
+                cdata.course = rdata.course
+                cdata.save()
+                messages.info(request, 'Successfully Granted')
             # if search:
             #     conditions &= Q(eng_title__icontains=search)
             if status:
@@ -355,7 +377,7 @@ class lessionlist(LoginRequiredMixin,View):
             html_content = template.render(context, request)
             return JsonResponse({'status': True, 'template': html_content})
 
-        data = Lessions.objects.all().order_by('-id')
+        data = Lessions.objects.filter(course=id).order_by('-id')
         p = Paginator(data, 15)
         page_num = request.GET.get('page', 1)
         try:
@@ -451,7 +473,7 @@ class userslist(LoginRequiredMixin,View):
             html_content = template.render(context, request)
             return JsonResponse({'status': True, 'template': html_content})
 
-        data = Courses.objects.all().order_by('-id')
+        data = User.objects.filter(user_type=4).order_by('-id')
         p = Paginator(data, 15)
         page_num = request.GET.get('page', 1)
         try:

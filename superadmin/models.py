@@ -4,6 +4,7 @@ from django.db import models
 # from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from autoslug import AutoSlugField
 
 
 from django.contrib.auth.models import AbstractBaseUser
@@ -163,6 +164,14 @@ class Courses(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    slug = AutoSlugField(populate_from='title', null=True, blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.title != self.slug:
+            self.slug = AutoSlugField(populate_from='title', unique=True).slugify(self.title)
+
+        super(Courses, self).save(*args, **kwargs)
 
 
 class Lessions(models.Model):
@@ -186,6 +195,13 @@ class LessionContents(models.Model):
 
 
 
+class UserCourses(models.Model):
+    course = models.ForeignKey(Courses,on_delete=models.SET_NULL,null=True, blank=True)
+    user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True, blank=True)
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 class RegisteredUsers(models.Model):
     course = models.ForeignKey(Courses,on_delete=models.SET_NULL,null=True, blank=True)
     name = models.TextField(null=True, blank=True)
@@ -193,6 +209,7 @@ class RegisteredUsers(models.Model):
     phone = models.TextField(null=True, blank=True)
     proffesion = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='regsiter',null=True, blank=True)
+    status = models.IntegerField(default=0)
     is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

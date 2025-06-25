@@ -32,13 +32,59 @@ import random
 class index(View):
     def get(self, request):
         context = {}
-        if request.user.id:
-            return redirect('superadmin:dashboard')
-        else:
-            return renderhelper(request, 'home', 'index', context)
+        context['course'] = Courses.objects.filter(is_active=True)
+        return renderhelper(request, 'home', 'index', context)
 
 class register(View):
+    def get(self, request,slug=None):
+        context = {}
+        context['course'] = Courses.objects.get(slug=slug)
+        return renderhelper(request, 'register', 'register', context)
+    
+    def post(self, request,slug=None):
+        course = Courses.objects.get(slug=slug)
+        data = RegisteredUsers()
+        data.course = course
+        data.name = request.POST.get('name')
+        data.email = request.POST.get('email')
+        data.phone = request.POST.get('phone')
+        data.proffesion = request.POST.get('profession')
+        image = request.FILES.get('imagefile')
+        if image:
+            data.image = image
+        data.save()
+        return redirect('website:successpage')
+        
+    
+class successpage(View):
     def get(self, request):
         context = {}
+        return renderhelper(request, 'register', 'success-page', context)    
+        
+class loginuser(View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'register', 'login', context)    
+    def post(self,request):
+        context = {}
+        username = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        user = authenticate(username=username, password=password)
+        
+        # return HttpResponse(user)
 
-        return renderhelper(request, 'register', 'register', context)
+        if user:
+            login(request, user)
+            return redirect('website:dashboard')
+        else:
+            context['username'] = username
+            context['password'] = password
+            messages.info(request, 'Invalid Username or Password')
+            return renderhelper(request, 'register', 'login', context)
+        
+    
+class dashboard(View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'register', 'dashboard', context)

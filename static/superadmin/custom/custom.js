@@ -178,3 +178,28 @@ function restrictAlphabets(e) {
 });
 }
 
+
+ function granruser(id){
+    page=$("#page").val();
+
+
+//    var search = $('#searchkey').val()
+  var status = $('#status').val()
+  var url = $('#url').val()
+  $.ajax({
+    url: url,
+    type: 'GET',
+    data: {page:page,status:status,id:id,type:6},
+
+    beforeSend: function() {
+      $("#loaderid").show();
+  },
+    success: function(data) {
+      $("#loaderid").hide();
+
+     $(".table-responsive").html(data.template)
+
+
+    }
+});
+}
