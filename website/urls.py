@@ -16,4 +16,10 @@ urlpatterns = [
     path('loginuser',views.loginuser.as_view(),name='loginuser'),
     path('dashboard',views.dashboard.as_view(),name='dashboard'),
     
+    path('myprofile',views.myprofile.as_view(),name='myprofile'),
+    path('mycourse',views.mycourse.as_view(),name='mycourse'),
+    path('coursedetails/<str:id>',views.coursedetails.as_view(),name='coursedetails'),
+    path('settings',views.settings.as_view(),name='settings'),
+    path('Logout',views.Logout.as_view(),name='Logout'),
+    
 ]

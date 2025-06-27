@@ -1,5 +1,6 @@
 {% include 'website/layouts/header.html' %}
 {% load static %}
+{% load custom_tags %}
 <div class="rbt-page-banner-wrapper">
     <!-- Start Banner BG Image  -->
     <div class="rbt-banner-image"></div>
@@ -17,10 +18,10 @@
                     <div class="rbt-tutor-information">
                         <div class="rbt-tutor-information-left">
                             <div class="thumbnail rbt-avatars size-lg">
-                                <img {% if request.user.image %} src="{{request.user.image.url}}" {% else %} src="{% static 'website/assets/img/default.png' %}" {% endif %} alt="Instructor">
+                                <img src="assets/images/team/avatar-2.jpg" alt="Instructor">
                             </div>
                             <div class="tutor-content">
-                                <h5 class="title">{{request.user.name}}</h5>
+                                <h5 class="title">Emily Hannah</h5>
                                 <ul class="rbt-meta rbt-meta-white mt--5">
                                     <li><i class="feather-book"></i>5 Courses Enroled</li>
                                     <li><i class="feather-award"></i>4 Certificate</li>
@@ -42,21 +43,21 @@
 
                                     <div class="rbt-default-sidebar-wrapper">
                                         <div class="section-title mb--20">
-                                            <h6 class="rbt-title-style-2">Welcome, {{request.user.name}}</h6>
+                                            <h6 class="rbt-title-style-2">Welcome, Jone Due</h6>
                                         </div>
                                         <nav class="mainmenu-nav">
                                             <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                                                <li><a href="{% url 'website:dashboard' %}"><i
+                                                <li><a href="dashboard.php"><i
                                                             class="feather-home"></i><span>Dashboard</span></a></li>
-                                                <li><a href="{% url 'website:myprofile' %}"><i class="feather-user"></i><span>My
+                                                <li><a href="profile.php"><i class="feather-user"></i><span>My
                                                             Profile</span></a></li>
-                                                <li><a href="{% url 'website:mycourse' %}"><i
+                                                <li><a href="enrolled-courses.php"><i
                                                             class="feather-book-open"></i><span>Enrolled
                                                             Courses</span></a></li>
 
 
 
-                                             
+                                              
                                             </ul>
                                         </nav>
 
@@ -66,7 +67,7 @@
 
                                         <nav class="mainmenu-nav">
                                             <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                                                <li><a href="settings.php"><i
+                                                 <li><a href="settings.php"><i
                                                             class="feather-settings"></i><span>Settings</span></a></li>
                                                 <li><a href="index.php"><i
                                                             class="feather-log-out"></i><span>Logout</span></a></li>
@@ -82,54 +83,43 @@
 
                     <div class="col-lg-9">
                         <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">
-                            <div class="content">
-                                <div class="section-title">
-                                    <h4 class="rbt-title-style-3">Dashboard</h4>
-                                </div>
-                                <div class="row g-5">
+                            <div class="row">
+                            <div class="section-title">
+                                <h4 class="rbt-title-style-3">Enrolled Courses</h4>
+                            </div>
+                            <!-- Start Single Course  -->
+                             {% for course in courses %}
+                            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                                <div class="rbt-card variation-01 rbt-hover">
+                                    <div class="rbt-card-img">
+                                        <a href="{% url 'website:coursedetails' course.course.slug %}">
+                                            <img src="{{course.course.image.url}}" alt="Card image">
+                                        </a>
+                                    </div>
+                                    <div class="rbt-card-body">
+                                       
+                                        <h4 class="rbt-card-title"><a href="{% url 'website:coursedetails' course.course.slug %}">{{course.course.title}}</a>
+                                        </h4>
+                                        <ul class="rbt-meta">
+                                            <li><i class="feather-book"></i>{% lession_count course.course.id %} Lessons</li>
+                                            
+                                        </ul>
 
-                                    <!-- Start Single Card  -->
-                                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div
-                                            class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-primary-opacity">
-                                            <div class="inner">
-                                                <div class="rbt-round-icon bg-primary-opacity">
-                                                    <i class="feather-book-open"></i>
-                                                </div>
-                                                <div class="content">
-                                                    <h3 class="counter without-icon color-primary"><span
-                                                            class="odometer" data-count="30">00</span>
-                                                    </h3>
-                                                    <span class="rbt-title-style-2 d-block">Enrolled Courses</span>
-                                                </div>
-                                            </div>
+                                       
+                                        <div class="rbt-card-bottom">
+                                            <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                                href="download-certificate.php">Download Certificate</a>
+                                                
                                         </div>
                                     </div>
-                                    <!-- End Single Card  -->
-
-
-                                    <!-- Start Single Card  -->
-                                    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                                        <div
-                                            class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
-                                            <div class="inner">
-                                                <div class="rbt-round-icon bg-violet-opacity">
-                                                    <i class="feather-award"></i>
-                                                </div>
-                                                <div class="content">
-                                                    <h3 class="counter without-icon color-violet"><span class="odometer"
-                                                            data-count="7">00</span>
-                                                    </h3>
-                                                    <span class="rbt-title-style-2 d-block">Completed Courses</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Single Card  -->
-
                                 </div>
                             </div>
+                            {% endfor %}
+                            <!-- End Single Course  -->
+                          
                         </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -137,6 +127,7 @@
     </div>
 </div>
 <!-- End Card Style -->
+
 
 
 {% include 'website/layouts/footer.html' %}

@@ -84,7 +84,57 @@ class loginuser(View):
             return renderhelper(request, 'register', 'login', context)
         
     
+class Logout(View):
+    def get(self, request):
+        logout(request)
+        return redirect('website:index')   
+    
 class dashboard(View):
     def get(self, request):
         context = {}
-        return renderhelper(request, 'register', 'dashboard', context)
+        return renderhelper(request, 'register', 'dashboard', context)    
+    
+class myprofile(View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'register', 'profile', context)   
+         
+class mycourse(View):
+    def get(self, request):
+        context = {}
+        context['courses'] = UserCourses.objects.filter(user=request.user.id)
+        return renderhelper(request, 'register', 'mycourse', context)   
+              
+class coursedetails(View):
+    def get(self, request,id=None):
+        context = {}
+        context['course'] =course= Courses.objects.get(slug=id)
+        lessons = Lessions.objects.filter(course=course.id,is_active=True).order_by('id')
+        lsn = []
+        for i in lessons:
+            tmp = {
+                'id': i.id,
+                'title': i.title,
+                'chapter':list(LessionContents.objects.filter(lesson=i.id,is_active=True).values('id','title','url'))
+                
+            }
+            lsn.append(tmp)
+        context['lessions'] = lsn
+        return renderhelper(request, 'register', 'course-details', context)   
+     
+class settings(View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'register', 'settings', context)
+    
+    def post(self, request):
+        context = {}
+        request.user.name = request.POST.get('name')
+        request.user.phone = request.POST.get('phone')
+        request.user.profession = request.POST.get('proffession')
+        image = request.FILES.get('image')
+        if image:
+            request.user.image = image
+        request.user.save()
+        return redirect('website:settings')
+        

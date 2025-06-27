@@ -74,6 +74,15 @@
                         <div class="rbt-header-content">
                             <div class="header-info">
                                 <ul class="quick-access">
+                                    {% if request.user.id %}
+                                    <li class="access-icon rbt-user-wrapper">
+                                        <a class="rbt-round-btn" href="{% url 'website:dashboard' %}">
+                                            <i class="feather-user"></i>
+                                        </a>
+                                        
+                                    </li>
+
+                                    {% else %}
                                     
                                     <li class="access-icon rbt-user-wrapper">
                                         <a class="rbt-btn btn-white btn-sm hover-icon-reverse" href="{% url 'website:loginuser' %}">
@@ -81,12 +90,8 @@
                                         </a>
                                         
                                     </li>
-                                    <li class="access-icon rbt-user-wrapper">
-                                        <a class="rbt-round-btn" href="{% url 'website:dashboard' %}">
-                                            <i class="feather-user"></i>
-                                        </a>
-                                        
-                                    </li>
+                                    {% endif %}
+                                    
                                 </ul>
                             </div>
 
@@ -136,18 +141,25 @@
 
                         <div class="d-block d-xl-none">
                             <ul class="quick-access">
-                                <li class="access-icon rbt-user-wrapper">
-                                        <a class="rbt-btn btn-white btn-sm hover-icon-reverse" href="login.php">
-                                            Login
-                                        </a>
-                                        
-                                    </li>
-                                <li class="access-icon rbt-user-wrapper right-align-dropdown">
+                                {% if request.user.id %}
+
+                                 <li class="access-icon rbt-user-wrapper right-align-dropdown">
                                     <a class="rbt-round-btn" href="{% url 'website:dashboard' %}">
                                         <i class="feather-user"></i>
                                     </a>
                                     
                                 </li>
+
+                                {% else %}
+                                    <li class="access-icon rbt-user-wrapper">
+                                        <a class="rbt-btn btn-white btn-sm hover-icon-reverse" href="login.php">
+                                            Login
+                                        </a>
+                                        
+                                    </li>
+                                {% endif %}
+                                    
+                               
                             </ul>
                         </div>
 

@@ -20,7 +20,7 @@
                                     <img src="assets/images/team/avatar-2.jpg" alt="Instructor">
                                 </div>
                                 <div class="tutor-content">
-                                    <h5 class="title">Emily Hannah</h5>
+                                    <h5 class="title">{{request.user.name}}</h5>
                                     <ul class="rbt-meta rbt-meta-white mt--5">
                                         <li><i class="feather-book"></i>5 Courses Enroled</li>
                                         <li><i class="feather-award"></i>4 Certificate</li>
@@ -42,12 +42,12 @@
 
                                         <div class="rbt-default-sidebar-wrapper">
                                             <div class="section-title mb--20">
-                                                <h6 class="rbt-title-style-2">Welcome, Jone Due</h6>
+                                                <h6 class="rbt-title-style-2">Welcome, {{request.user.name}}</h6>
                                             </div>
                                             <nav class="mainmenu-nav">
                                                 <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                                                    <li><a href="dashboard.php"><i class="feather-home"></i><span>Dashboard</span></a></li>
-                                                    <li><a href="profile.php"><i class="feather-user"></i><span>My Profile</span></a></li>
+                                                    <li><a href="{% url 'website:dashboard' %}"><i class="feather-home"></i><span>Dashboard</span></a></li>
+                                                    <li><a href="{% url 'website:myprofile' %}"><i class="feather-user"></i><span>My Profile</span></a></li>
                                                     <li><a href="enrolled-courses.php"><i class="feather-book-open"></i><span>Enrolled Courses</span></a></li>
                                                     
                                                    
@@ -61,7 +61,7 @@
 
                                             <nav class="mainmenu-nav">
                                                 <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                                                     <li><a href="settings.php"><i
+                                                     <li><a href="{% url 'website:settings' %}"><i
                                                             class="feather-settings"></i><span>Settings</span></a></li>
                                                     <li><a href="index.php"><i class="feather-log-out"></i><span>Logout</span></a></li>
                                                 </ul>
@@ -89,7 +89,7 @@
                                             <div class="rbt-profile-content b2">First Name</div>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <div class="rbt-profile-content b2">Emily</div>
+                                            <div class="rbt-profile-content b2">{{request.user.name}}</div>
                                         </div>
                                     </div>
                                     <!-- End Profile Row  -->
@@ -102,7 +102,7 @@
                                             <div class="rbt-profile-content b2">Email</div>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <div class="rbt-profile-content b2">example@gmail.com</div>
+                                            <div class="rbt-profile-content b2">{{request.user.email}}</div>
                                         </div>
                                     </div>
                                     <!-- End Profile Row  -->
@@ -113,7 +113,7 @@
                                             <div class="rbt-profile-content b2">Phone Number</div>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <div class="rbt-profile-content b2">+1-202-555-0174</div>
+                                            <div class="rbt-profile-content b2">{{request.user.phone}}</div>
                                         </div>
                                     </div>
                                     <!-- End Profile Row  -->
@@ -124,7 +124,7 @@
                                             <div class="rbt-profile-content b2">Profession</div>
                                         </div>
                                         <div class="col-lg-8 col-md-8">
-                                            <div class="rbt-profile-content b2">Doctor</div>
+                                            <div class="rbt-profile-content b2">{{request.user.profession}}</div>
                                         </div>
                                     </div>
                                     <!-- End Profile Row  -->
