@@ -102,6 +102,7 @@ class myprofile(View):
 class mycourse(View):
     def get(self, request):
         context = {}
+        context['today'] = datetime.today()
         context['courses'] = UserCourses.objects.filter(user=request.user.id)
         return renderhelper(request, 'register', 'mycourse', context)   
               
@@ -120,7 +121,15 @@ class coursedetails(View):
             }
             lsn.append(tmp)
         context['lessions'] = lsn
+        context['lessionscount'] = lessons.count()
         return renderhelper(request, 'register', 'course-details', context)   
+              
+class coursecertificate(View):
+    def get(self, request,id=None):
+        context = {}
+        context['course'] =course= Courses.objects.get(slug=id)
+        
+        return renderhelper(request, 'register', 'certificate', context)   
      
 class settings(View):
     def get(self, request):

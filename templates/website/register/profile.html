@@ -1,5 +1,5 @@
 {% include 'website/layouts/header.html' %}
-
+{% load custom_tags %}
  <div class="rbt-page-banner-wrapper">
         <!-- Start Banner BG Image  -->
         <div class="rbt-banner-image"></div>
@@ -22,7 +22,7 @@
                                 <div class="tutor-content">
                                     <h5 class="title">{{request.user.name}}</h5>
                                     <ul class="rbt-meta rbt-meta-white mt--5">
-                                        <li><i class="feather-book"></i>5 Courses Enroled</li>
+                                        <li><i class="feather-book"></i>{% mycoursecount request.user.id  %} Courses Enroled</li>
                                         <li><i class="feather-award"></i>4 Certificate</li>
                                     </ul>
                                 </div>
@@ -48,7 +48,7 @@
                                                 <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                                                     <li><a href="{% url 'website:dashboard' %}"><i class="feather-home"></i><span>Dashboard</span></a></li>
                                                     <li><a href="{% url 'website:myprofile' %}"><i class="feather-user"></i><span>My Profile</span></a></li>
-                                                    <li><a href="enrolled-courses.php"><i class="feather-book-open"></i><span>Enrolled Courses</span></a></li>
+                                                    <li><a href="{% url 'website:mycourse' %}"><i class="feather-book-open"></i><span>Enrolled Courses</span></a></li>
                                                     
                                                    
                                                    
@@ -63,7 +63,7 @@
                                                 <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                                                      <li><a href="{% url 'website:settings' %}"><i
                                                             class="feather-settings"></i><span>Settings</span></a></li>
-                                                    <li><a href="index.php"><i class="feather-log-out"></i><span>Logout</span></a></li>
+                                                    <li><a href="{% url 'website:Logout' %}"><i class="feather-log-out"></i><span>Logout</span></a></li>
                                                 </ul>
                                             </nav>
                                         </div>

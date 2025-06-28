@@ -18,12 +18,12 @@
                     <div class="rbt-tutor-information">
                         <div class="rbt-tutor-information-left">
                             <div class="thumbnail rbt-avatars size-lg">
-                                <img src="assets/images/team/avatar-2.jpg" alt="Instructor">
+                                <img {% if request.user.image %} src="{{request.user.image.url}}" {% else %} src="{% static 'website/assets/img/default.png' %}" {% endif %} alt="Instructor">
                             </div>
                             <div class="tutor-content">
-                                <h5 class="title">Emily Hannah</h5>
+                                <h5 class="title">{{request.user.name}}</h5>
                                 <ul class="rbt-meta rbt-meta-white mt--5">
-                                    <li><i class="feather-book"></i>5 Courses Enroled</li>
+                                    <li><i class="feather-book"></i>{% mycoursecount request.user.id %} Courses Enroled</li>
                                     <li><i class="feather-award"></i>4 Certificate</li>
                                 </ul>
                             </div>
@@ -43,15 +43,15 @@
 
                                     <div class="rbt-default-sidebar-wrapper">
                                         <div class="section-title mb--20">
-                                            <h6 class="rbt-title-style-2">Welcome, Jone Due</h6>
+                                            <h6 class="rbt-title-style-2">Welcome, {{request.user.name}}</h6>
                                         </div>
                                         <nav class="mainmenu-nav">
                                             <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                                                <li><a href="dashboard.php"><i
+                                                <li><a href="{% url 'website:dashboard' %}"><i
                                                             class="feather-home"></i><span>Dashboard</span></a></li>
-                                                <li><a href="profile.php"><i class="feather-user"></i><span>My
+                                                <li><a href="{% url 'website:myprofile' %}"><i class="feather-user"></i><span>My
                                                             Profile</span></a></li>
-                                                <li><a href="enrolled-courses.php"><i
+                                                <li><a href="{% url 'website:mycourse' %}"><i
                                                             class="feather-book-open"></i><span>Enrolled
                                                             Courses</span></a></li>
 
@@ -105,12 +105,13 @@
                                             
                                         </ul>
 
-                                       
+                                        {% if course.course.enddate > today %}
                                         <div class="rbt-card-bottom">
                                             <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                                                href="download-certificate.php">Download Certificate</a>
+                                                href="{% url 'website:coursecertificate' course.course.slug %}">Download Certificate</a>
                                                 
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

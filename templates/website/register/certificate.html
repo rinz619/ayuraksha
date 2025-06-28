@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Certificate</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Imperial+Script&display=swap');
+    </style>
+</head>
+
+<body style="margin: auto;display: flex;flex-direction: column;justify-content: center;align-items: center;margin-top: 60px;
+    background-color: #e9e2cb3b;">
+    <div id="certificate"
+        style="width: 870px;height: 580px;text-align: center;font-family: 'Plus Jakarta Sans', sans-serif;background-image: url('{% static "website/assets/img/Certificate.png" %}');background-size: contain;background-repeat: no-repeat;background-position: center; position:relative">
+      
+       
+        <h2 style="font-size: 26px;margin: 20px 0;font-family: 'Imperial Script', 'cursive';position: absolute;left: 50%;transform: translateX(-50%);top: 46%;" >{{request.user.name}}</h2>
+       
+        <h3 style="font-size: 17px;margin: 20px 0;color:#07844A;font-family: 'Plus Jakarta Sans';font-weight: 400;position: absolute;left: 50%;transform: translateX(-50%);top: 63%;">{{course.title}}</h3>
+        <p style="margin-top: 60px;font-size: 13px;position: absolute;right: 29%;bottom: 18%;font-family: 'Plus Jakarta Sans';font-weight: 300;"><strong>{{course.enddate}}</strong></p>
+       
+    </div>
+
+    <button onclick="generatePDF()" style="margin-top: 40px;background-image: linear-gradient(240deg, #07844a, #85bd54cf);padding: 15px 24px;border-radius: 12px;border: none;color: #ffffff;font-size: 15px;font-weight: 600;font-family: 'Plus Jakarta Sans';cursor: pointer;">Download as PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        async function generatePDF() {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const certificate = document.getElementById("certificate");
+
+            // Convert HTML to canvas
+            const canvas = await html2canvas(certificate);
+            const imgData = canvas.toDataURL("image/png");
+
+            // Create PDF
+            const pdf = new jsPDF("landscape", "pt", [800, 550]);
+            pdf.addImage(imgData, "PNG", 0, 0, 800, 550);
+            pdf.save("certificate.pdf");
+        }
+    </script>
+</body>
+
+</html>

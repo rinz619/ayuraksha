@@ -14,7 +14,7 @@
                             <li>
                                 <div class="icon-right"><i class="feather-chevron-right"></i></div>
                             </li>
-                            <li class="rbt-breadcrumb-item active">Web Development</li>
+                            <li class="rbt-breadcrumb-item active">{{course.title}}</li>
                         </ul>
                         <h2 class="title">{{course.title}}</h2>
                        
@@ -174,7 +174,7 @@
                         <div class="inner">
 
                            <div class="rbt-course-feature-box  thuumbnail">
-                            <img class="w-100" src="assets/img/course-img.jpeg" alt="Card image">
+                            <img class="w-100" src="{{course.image.url}}" alt="Card image">
                         </div>
 
                             <div class="content-item-content">
@@ -185,7 +185,7 @@
                                         <li><span>Course Duration</span><span class="rbt-feature-value rbt-badge-5">5 Hrs 20
                                                 Min</span>
                                         </li>
-                                        <li><span>Lessons</span><span class="rbt-feature-value rbt-badge-5">12</span>
+                                        <li><span>Lessons</span><span class="rbt-feature-value rbt-badge-5">{{lessionscount}}</span>
                                         </li>
                                         <li><span>Certificate</span><span class="rbt-feature-value rbt-badge-5">Yes</span>
                                         </li>

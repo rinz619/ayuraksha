@@ -16,3 +16,9 @@ def lession_count(id):
     lead = Lessions.objects.filter(course=id,is_active=True).count()
     return lead
     
+
+@register.simple_tag()
+def mycoursecount(uid):
+    lead = UserCourses.objects.filter(user=uid,is_active=True).count()
+    return lead
+    
