@@ -31,10 +31,10 @@
                             <h5 class="ft-title">Quick Links</h5>
                             <ul class="ft-link">
                                 <li>
-                                    <a href="privacy-policy.php">Privacy Policy</a>
+                                    <a href="{% url 'website:privacypolicy' %}">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="terms-and-conditions.php">Terms & Conditions</a>
+                                    <a href="{% url 'website:termsandcondition' %}">Terms & Conditions</a>
                                 </li>
                               
                                
@@ -47,7 +47,11 @@
                             <h5 class="ft-title">Quick Links</h5>
                             <ul class="ft-link">
                                 <li>
-                                    <a href="login.php">Login</a>
+                                    {% if request.user.id %}
+                                    <a href="{% url 'website:dashboard' %}">Profile</a>
+                                    {% else %}
+                                    <a href="{% url 'website:loginuser' %}">Login</a>
+                                    {% endif %}
                                 </li>
                                 <li>
                                     <a href="tel:+91 8547 485416">Contact Us</a>

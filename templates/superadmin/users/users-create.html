@@ -11,7 +11,7 @@
             <div class="page-header">
                 <h1 class="page-title">Users</h1>
                 <div>
-                    <a class="btn btn-primary" href="users-view.php"><i
+                    <a class="btn btn-primary" href="{% url 'superadmin:userslist' %}"><i
                             class="side-menu__icon fe fe-eye mx-1"></i>View All</a>
                 </div>
             </div>
@@ -24,13 +24,13 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form  method="post" enctype="multipart/form">
+                            <form  method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="row">
 
                                     <div class="col-lg-12 col-sm-12 mb-4 mb-lg-0">
                                         <label for="#" class="form-label">Upload Profile Image</label>
-                                        <input type="file" class="dropify" data-bs-height="180" name="image" />
+                                        <input type="file" class="dropify" data-bs-height="180" name="image" data-default-file="{{data.image.url}}" />
                                     </div>
 
                                 </div>
@@ -53,27 +53,23 @@
 
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="#" placeholder="Name" name="name" required />
+                                    <input type="text" class="form-control" id="#" placeholder="Name" name="name" required value={{data.name}} />
                                 </div>
                                
                                 
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Mobile Number</label>
-                                    <input type="number" class="form-control" id="#" placeholder="Mobile Number" name="mobile" required />
+                                    <input type="number" class="form-control" id="#" placeholder="Mobile Number" name="mobile" required value={{data.phone}} />
                                 </div>
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Email ID</label>
-                                    <input type="email" class="form-control" id="#" placeholder="Email ID" name="email" required />
+                                    <input type="email" class="form-control" id="#" placeholder="Email ID" name="email" required value={{data.email}} />
                                 </div>
                                 <div class="form-group col-lg-6 col-12">
                                     <label for="#" class="form-label">Profession</label>
-                                    <input type="text" class="form-control" id="#" placeholder="Profession" name="profession" required />
+                                    <input type="text" class="form-control" id="#" placeholder="Profession" name="profession" required value={{data.profession}} />
                                 </div>
-                                <div class="form-group col-lg-6 col-12">
-                                    <label for="#" class="form-label">Profession</label>
-                                    <input type="text" class="form-control" id="#" placeholder="Profession" name="profession" required />
-                                </div>
-							
+                   
                                
                                
                                 <div class="form-group col-lg-3 col-3">

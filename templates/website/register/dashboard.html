@@ -1,5 +1,7 @@
 {% include 'website/layouts/header.html' %}
 {% load static %}
+{% load custom_tags %}
+
 <div class="rbt-page-banner-wrapper">
     <!-- Start Banner BG Image  -->
     <div class="rbt-banner-image"></div>
@@ -22,7 +24,7 @@
                             <div class="tutor-content">
                                 <h5 class="title">{{request.user.name}}</h5>
                                 <ul class="rbt-meta rbt-meta-white mt--5">
-                                    <li><i class="feather-book"></i>5 Courses Enroled</li>
+                                    <li><i class="feather-book"></i>{% mycoursecount request.user.id  %} Courses Enroled</li>
                                     <li><i class="feather-award"></i>4 Certificate</li>
                                 </ul>
                             </div>
@@ -98,7 +100,7 @@
                                                 </div>
                                                 <div class="content">
                                                     <h3 class="counter without-icon color-primary"><span
-                                                            class="odometer" data-count="30">00</span>
+                                                            class="odometer" data-count="{% mycoursecount request.user.id  %}">00</span>
                                                     </h3>
                                                     <span class="rbt-title-style-2 d-block">Enrolled Courses</span>
                                                 </div>

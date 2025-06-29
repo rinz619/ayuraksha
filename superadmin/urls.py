@@ -27,6 +27,7 @@ urlpatterns = [
     path('registeredlist', views.registeredlist.as_view(), name='registeredlist'),
     path('userslist', views.userslist.as_view(), name='userslist'),
     path('userscreate', views.userscreate.as_view(), name='userscreate'),
+    path('usersedit/<int:id>', views.userscreate.as_view(), name='usersedit'),
 
      
 

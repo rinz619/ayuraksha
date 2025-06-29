@@ -26,9 +26,11 @@
                                     </div>
                                 </div>
                                 <div class="rbt-button-group justify-content-start mt--30">
-                                    <a class="rbt-btn btn-gradient btn-sm" href="#">
+                                    {% if not request.user.id %}
+                                    <a class="rbt-btn btn-gradient btn-sm" href="{% url 'website:loginuser' %}">
                                         <span data-text="Login">Login</span>
                                     </a>
+                                    {% endif %}
                                    
                                 </div>
                             </div>

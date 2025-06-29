@@ -1,5 +1,6 @@
 {% include 'website/layouts/header.html' %}
 {% load custom_tags %}
+{% load static %}
  <div class="rbt-page-banner-wrapper">
         <!-- Start Banner BG Image  -->
         <div class="rbt-banner-image"></div>
@@ -17,7 +18,7 @@
                         <div class="rbt-tutor-information">
                             <div class="rbt-tutor-information-left">
                                 <div class="thumbnail rbt-avatars size-lg">
-                                    <img src="assets/images/team/avatar-2.jpg" alt="Instructor">
+                                <img {% if request.user.image %} src="{{request.user.image.url}}" {% else %} src="{% static 'website/assets/img/default.png' %}" {% endif %} alt="Instructor">
                                 </div>
                                 <div class="tutor-content">
                                     <h5 class="title">{{request.user.name}}</h5>

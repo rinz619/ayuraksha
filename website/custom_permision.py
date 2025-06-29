@@ -67,13 +67,13 @@ class LoginRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
     def dispatch(self, request, *args, **kwargs):
         try:
-            if request.user.user_type == 4:
-                return redirect('superadmin:login')
+            if request.user.user_type != 4:
+                return redirect('website:index')
 
         except:
-            return redirect('superadmin:login')
-        if request.user.is_authenticated and request.user.user_type == 4:
-            return redirect('superadmin:login')
+            return redirect('website:index')
+        if request.user.is_authenticated and request.user.user_type != 4:
+            return redirect('website:index')
         if not request.user.is_authenticated:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)

@@ -444,7 +444,7 @@ class userslist(LoginRequiredMixin,View):
             if type == '1':
                 id = request.GET.get('id')
                 vl = request.GET.get('vl')
-                cat = Courses.objects.get(id=id)
+                cat = User.objects.get(id=id)
                 if vl == '2':
                     cat.is_active = False
                 else:
@@ -453,13 +453,14 @@ class userslist(LoginRequiredMixin,View):
                 messages.info(request, 'Successfully Updated')
             elif type == '2':
                 id = request.GET.get('id')
-                Courses.objects.filter(id=id).delete()
+                User.objects.filter(id=id).delete()
                 messages.info(request, 'Successfully Deleted')
             # if search:
             #     conditions &= Q(eng_title__icontains=search)
             if status:
                 conditions &= Q(is_active=status)
-            data_list = Courses.objects.filter(conditions).order_by('-id')
+            conditions &= Q(user_type=4)
+            data_list = User.objects.filter(conditions).order_by('-id')
             paginator = Paginator(data_list, 15)
 
             try:
@@ -469,7 +470,7 @@ class userslist(LoginRequiredMixin,View):
             except EmptyPage:
                 datas = paginator.page(paginator.num_pages)
             context['datas'] = datas
-            template = loader.get_template('superadmin/course/course-table.html')
+            template = loader.get_template('superadmin/users/users-table.html')
             html_content = template.render(context, request)
             return JsonResponse({'status': True, 'template': html_content})
 
@@ -490,7 +491,7 @@ class userscreate(LoginRequiredMixin, View):
     def get(self, request, id=None):
         context = {}
         try:
-            context['data'] = Courses.objects.get(id=id)
+            context['data'] = User.objects.get(id=id)
         except:
             context['data'] = None
         context['mentors'] = User.objects.filter(user_type=2).order_by('name')
@@ -504,40 +505,15 @@ class userscreate(LoginRequiredMixin, View):
             data = User()
             messages.info(request, 'Successfully Added')
 
-        course_thumbnail = request.FILES.get('course_thumbnail')
-        if course_thumbnail:
-            data.image=course_thumbnail
+        image = request.FILES.get('image')
+        if image:
+            data.image=image
 
-        course_chat_room_thumbnail = request.FILES.get('course_chat_room_thumbnail')
-        if course_chat_room_thumbnail:
-            data.chatroom=course_chat_room_thumbnail
-
-
-       
-
-        # data.type=request.POST['course_type']
-        data.type=request.POST['type']
-        data.title=request.POST['title']
-        data.mentor_id=request.POST['mentor_id']
-        data.duration=request.POST['duration']
-        data.demourl=request.POST['demo_video_url']
-        data.priceaed_android=request.POST['priceaed_android']
-        data.pricedollar_android=request.POST['pricedollar_android']
-        data.priceaed_ios=request.POST['priceaed_ios']
-        data.pricedollar_ios=request.POST['pricedollar_ios']
-        data.highlight1=request.POST['highlight_1']
-        data.highlight2=request.POST['highlight_2']
-        data.highlight3=request.POST['highlight_3']
-        data.value1=request.POST['value_1']
-        data.value2=request.POST['value_2']
-        data.value3=request.POST['value_3']
-        data.description=request.POST['course_description']
-
-        data.offering_Identifier=request.POST['offering_Identifier']
-        data.package_Identifier=request.POST['package_Identifier']
-        data.entitlement_Identifier=request.POST['entitlement_Identifier']
-        
-
+        data.name = request.POST.get('name')
+        data.phone = request.POST.get('mobile')
+        data.email = request.POST.get('email')
+        data.profession = request.POST.get('profession')
+        data.user_type = 4 
         data.save()
 
 

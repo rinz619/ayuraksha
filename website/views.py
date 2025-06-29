@@ -84,29 +84,29 @@ class loginuser(View):
             return renderhelper(request, 'register', 'login', context)
         
     
-class Logout(View):
+class Logout(LoginRequiredMixin,View):
     def get(self, request):
         logout(request)
         return redirect('website:index')   
     
-class dashboard(View):
+class dashboard(LoginRequiredMixin,View):
     def get(self, request):
         context = {}
         return renderhelper(request, 'register', 'dashboard', context)    
     
-class myprofile(View):
+class myprofile(LoginRequiredMixin,View):
     def get(self, request):
         context = {}
         return renderhelper(request, 'register', 'profile', context)   
          
-class mycourse(View):
+class mycourse(LoginRequiredMixin,View):
     def get(self, request):
         context = {}
         context['today'] = datetime.today()
         context['courses'] = UserCourses.objects.filter(user=request.user.id)
         return renderhelper(request, 'register', 'mycourse', context)   
               
-class coursedetails(View):
+class coursedetails(LoginRequiredMixin,View):
     def get(self, request,id=None):
         context = {}
         context['course'] =course= Courses.objects.get(slug=id)
@@ -124,14 +124,25 @@ class coursedetails(View):
         context['lessionscount'] = lessons.count()
         return renderhelper(request, 'register', 'course-details', context)   
               
-class coursecertificate(View):
+class coursecertificate(LoginRequiredMixin,View):
     def get(self, request,id=None):
         context = {}
         context['course'] =course= Courses.objects.get(slug=id)
         
         return renderhelper(request, 'register', 'certificate', context)   
      
-class settings(View):
+class privacypolicy(View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'register', 'privacy', context)
+         
+class termsandcondition(View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'register', 'terms', context)
+    
+         
+class settings(LoginRequiredMixin,View):
     def get(self, request):
         context = {}
         return renderhelper(request, 'register', 'settings', context)

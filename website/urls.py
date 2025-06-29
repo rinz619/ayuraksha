@@ -23,4 +23,7 @@ urlpatterns = [
     path('settings',views.settings.as_view(),name='settings'),
     path('Logout',views.Logout.as_view(),name='Logout'),
     
+    path('privacypolicy',views.privacypolicy.as_view(),name='privacypolicy'),
+    path('termsandcondition',views.termsandcondition.as_view(),name='termsandcondition'),
+    
 ]
