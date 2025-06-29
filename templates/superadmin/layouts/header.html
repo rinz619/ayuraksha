@@ -72,11 +72,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="dropdown-divider m-0"></div>
-                                                <a class="dropdown-item" href="profile.php">
+                                                <a class="dropdown-item" href="{% url 'superadmin:profile' %}">
                                                     <i class="dropdown-icon fe fe-user"></i> Profile
                                                 </a>
 												
-                                                <a class="dropdown-item" href="login.php">
+                                                <a class="dropdown-item" href="{% url 'superadmin:Logout' %}">
                                                     <i class="dropdown-icon fe fe-alert-circle"></i> Sign out
                                                 </a>
                                             </div>
@@ -94,7 +94,7 @@
                 <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
                 <div class="app-sidebar">
                     <div class="side-header">
-                        <a class="header-brand1" href="index.php">
+                        <a class="header-brand1" href="{% url 'superadmin:dashboard' %}">
                             <img src="{% static 'superadmin/assets/images_ex/logo-dark.png' %}" class="header-brand-img desktop-logo" alt="logo">
                             <img src="{% static 'superadmin/assets/images_ex/icon-m.png' %}" class="header-brand-img toggle-logo"
                                 alt="logo">
@@ -114,7 +114,7 @@
                                 <h3>Main</h3>
                             </li>
                             <li class="slide">
-                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="index.php"><i
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{% url 'superadmin:dashboard' %}"><i
                                         class="side-menu__icon fe fe-grid"></i><span
                                         class="side-menu__label">Dashboard</span></a>
                             </li>

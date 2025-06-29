@@ -58,10 +58,47 @@ class index(View):
 
 
 
+class profile(LoginRequiredMixin,View):
+    def get(self, request):
+        context = {}
+        return renderhelper(request, 'login', 'profile',context)
 
+    def post(self, request):
+        password_to_check = request.POST['oldpassword']
+        newpassword = request.POST['newpassword']
+        conpassword = request.POST['conpassword']
+        password_matches = check_password(password_to_check, request.user.password)
+        if password_matches:
+            if newpassword == conpassword:
+                user = User.objects.get(id=request.user.id)
+                new_password = conpassword  # Replace 'new_password' with the new password
+                user.set_password(new_password)
+                user.pass_text = conpassword
+                user.save()
+                messages.info(request, 'Password changed')
+                return renderhelper(request, 'login', 'profile')
+            else:
+                messages.info(request, 'new password not matching')
+                context = {'oldpass': password_to_check, 'newpassword': newpassword, 'conpassword': conpassword}
+                return renderhelper(request, 'login', 'profile', context)
+
+        else:
+            messages.info(request, 'Your old password is incorrect')
+            context = {'oldpass': password_to_check,'newpassword':newpassword,'conpassword':conpassword}
+            return renderhelper(request, 'login', 'profile', context)
+
+
+class Logout(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        return redirect('superadmin:login')
+    
 class dashboard(LoginRequiredMixin, View):
     def get(self, request):
         context = {}
+        context['user'] = User.objects.filter(user_type=4).count()
+        context['course'] = Courses.objects.all().count()
+        context['register'] = RegisteredUsers.objects.all().count()
         return renderhelper(request, 'home', 'index', context)
 
 

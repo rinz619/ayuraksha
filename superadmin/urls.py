@@ -10,6 +10,9 @@ app_name = 'superadmin'
 urlpatterns = [
     path('',views.index.as_view(),name='login'),
     
+    path('Logout', views.Logout.as_view(), name='Logout'),
+    path('profile', views.profile.as_view(), name='profile'),
+
     path('dashboard', views.dashboard.as_view(), name='dashboard'),
     
     path('trainerlist', views.trainerlist.as_view(), name='trainerlist'),
