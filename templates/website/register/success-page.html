@@ -212,13 +212,21 @@
                         <div class="rbt-contact-form contact-form-style-1 max-width-auto">
                           <div class="reg text-center">
                               
-                           
-                             <h5>Thank You for Registering . </h5>
+                           {% if request.user.id %}
+                             <h5>Thank You for Enrolling . </h5>
+                             {% comment %} <p>Login credential send to your registered mail id</p> {% endcomment %}
+                                 <a class="rbt-btn btn-sm btn-gradient justify-content-center text-center" href="{% url 'website:index' %}">
+                        <span>Home</span>
+                    </a>
+                          {% else %}
+
+                           <h5>Thank You for Registering . </h5>
                              <p>Login credential send to your registered mail id</p>
                                  <a class="rbt-btn btn-sm btn-gradient justify-content-center text-center" href="{% url 'website:loginuser' %}">
                         <span>Login</span>
                     </a>
-                          
+
+                          {% endif %}
                           </div>
                         </div>
                     </div>

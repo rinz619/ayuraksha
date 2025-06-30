@@ -211,32 +211,33 @@
                           <form class="max-width-auto" method="post" enctype="multipart/form">
                             {% csrf_token %}
                              <div class="form-group">
-                                <input name="name" required type="text" placeholder="Name">
+                                <input name="name" required type="text" placeholder="Name"  {% if request.user.name %} value="{{request.user.name}}" readonly{% endif %}>
                                 <!-- <label>Name *</label> -->
                                 <span class="focus-border"></span>
                             </div>
                             <div class="form-group">
-                                <input required name="email" type="email"  placeholder="Email"/>
+                                <input required name="email" type="email"  placeholder="Email" {% if request.user.name %} value="{{request.user.email}}" readonly{% endif %}/>
                                 <!-- <label>Email *</label> -->
                                 <span class="focus-border"></span>
                             </div>
                              <div class="form-group">
-                                <input name="phone" required type="text" placeholder="Mobile Number">
+                                <input name="phone" required type="text" placeholder="Mobile Number" {% if request.user.name %} value="{{request.user.phone}}" readonly{% endif %}/>
                                 <!-- <label>Mobile Number *</label> -->
                                 <span class="focus-border"></span>
                             </div>
                             <div class="form-group">
-                                <input name="profession" required type="text" placeholder="Profession">
+                                <input name="profession" required type="text" placeholder="Profession" {% if request.user.name %} value="{{request.user.profession}}" readonly{% endif %}/>
                                 <!-- <label>Profession *</label> -->
                                 <span class="focus-border"></span>
                             </div>
                            
-
+                            {% if not request.user.is_authenticated %}
                             <div class="form-group">
                                 <input name="imagefile" type="file" placeholder="Upload Profile Image">
                                 <label>Upload Profile Image*</label>
                                 <span class="focus-border"></span>
                             </div>
+                            {% endif %}
                             <div class="form-group">
                                 <input name="" type="text" readonly  value="{{course.title}}" >
                                 <!-- <label>Course Name</label> -->
@@ -246,7 +247,7 @@
                             <div class="form-submit-group">
                                 <button type="submit"  class="rbt-btn btn-md btn-gradient hover-icon-reverse w-100">
                                     <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Enroll / Register</span>
+                                        <span class="btn-text">Enroll {% if not request.user.id %} / Register {% endif %}</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     </span>

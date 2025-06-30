@@ -25,7 +25,7 @@
                                 <h5 class="title">{{request.user.name}}</h5>
                                 <ul class="rbt-meta rbt-meta-white mt--5">
                                     <li><i class="feather-book"></i>{% mycoursecount request.user.id  %} Courses Enroled</li>
-                                    <li><i class="feather-award"></i>4 Certificate</li>
+                                    <li><i class="feather-award"></i>{% mycertificatecount request.user.id  %} Certificate</li>
                                 </ul>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                                                 </div>
                                                 <div class="content">
                                                     <h3 class="counter without-icon color-violet"><span class="odometer"
-                                                            data-count="7">00</span>
+                                                            data-count="{% mycertificatecount request.user.id  %}">00</span>
                                                     </h3>
                                                     <span class="rbt-title-style-2 d-block">Completed Courses</span>
                                                 </div>

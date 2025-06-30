@@ -24,7 +24,7 @@
                                     <h5 class="title">{{request.user.name}}</h5>
                                     <ul class="rbt-meta rbt-meta-white mt--5">
                                         <li><i class="feather-book"></i>{% mycoursecount request.user.id  %} Courses Enroled</li>
-                                        <li><i class="feather-award"></i>4 Certificate</li>
+                                        <li><i class="feather-award"></i>{% mycertificatecount request.user.id  %} Certificate</li>
                                     </ul>
                                 </div>
                             </div>

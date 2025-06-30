@@ -32,7 +32,7 @@ import random
 class index(View):
     def get(self, request):
         context = {}
-        context['course'] = Courses.objects.filter(is_active=True)
+        context['course'] = Courses.objects.filter(is_active=True,enddate__gte=datetime.now().date())
         return renderhelper(request, 'home', 'index', context)
 
 class register(View):
@@ -102,7 +102,7 @@ class myprofile(LoginRequiredMixin,View):
 class mycourse(LoginRequiredMixin,View):
     def get(self, request):
         context = {}
-        context['today'] = datetime.today()
+        context['today'] = datetime.now().date()
         context['courses'] = UserCourses.objects.filter(user=request.user.id)
         return renderhelper(request, 'register', 'mycourse', context)   
               

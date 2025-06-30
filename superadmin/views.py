@@ -16,6 +16,7 @@ from django.db.models import Q
 
 from django.http import JsonResponse
 from django.template.loader import render_to_string, get_template
+from django.core.mail import EmailMultiAlternatives
 
 from itertools import chain
 from django.core.files.base import ContentFile
@@ -102,6 +103,15 @@ class dashboard(LoginRequiredMixin, View):
         return renderhelper(request, 'home', 'index', context)
 
 
+import secrets
+import string
+
+def secure_random_string(length=12):
+    characters = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(characters) for _ in range(length))
+
+
+
 
 class registeredlist(LoginRequiredMixin,View):
     def get(self, request, id=None):
@@ -134,21 +144,54 @@ class registeredlist(LoginRequiredMixin,View):
                 rdata = RegisteredUsers.objects.get(id=id)
                 rdata.status = 1
                 rdata.save()
-                
-                udata = User()
+                passs = secure_random_string(10)
+                try:
+                    udata = User.objects.get(email=rdata.email)
+                except:
+                    udata = User()
+                    udata.password_text = passs
+                    udata.set_password(passs)
+                    udata.save()
+                    email = 'rinshad619@gmail.com'
+                    text_content = f"""
+                    Dear {rdata.name},
+
+                    These are your login credentials for accessing the Ayuraksha website:
+
+                    Username: {rdata.email}
+                    Password: {udata.password_text}
+
+                    Thank you.
+                    """
+
+                    try:
+                        mail = EmailMultiAlternatives(
+                            subject="Login Credentials",
+                            body=text_content,
+                            from_email='Ayuraksha <rinshad619@gmail.com>',
+                            to=[udata.email],
+                            reply_to=[email],
+                        )
+                        mail.send()
+                    except:
+                        pass
                 udata.name = rdata.name
                 udata.phone = rdata.phone
                 udata.email = rdata.email
                 udata.image = rdata.image
                 udata.profession = rdata.proffesion
                 udata.user_type = 4
-                udata.set_password(str(1234))
+                udata.password_text = passs
+                udata.set_password(passs)
                 udata.save()
                 
                 cdata = UserCourses()
                 cdata.user = udata
                 cdata.course = rdata.course
                 cdata.save()
+                
+                
+        
                 messages.info(request, 'Successfully Granted')
             # if search:
             #     conditions &= Q(eng_title__icontains=search)
